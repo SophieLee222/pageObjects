@@ -26,6 +26,10 @@ public class DataHelper {
         return new Random().nextInt(Math.abs(balance)) +1;
     }
 
+    public static int generateInvalidAmount(int balance) {
+        return Math.abs(balance) + new Random().nextInt(15000);
+    }
+
     //два дата класса для предоставления информации о клиенте
     @Value
     public static class AuthInfo {

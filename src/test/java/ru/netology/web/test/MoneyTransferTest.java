@@ -50,4 +50,18 @@ public class MoneyTransferTest {
         assertEquals(expectedBalanceFirstCard, cardFromNewBalance);
         assertEquals(expectedBalanceSecondCard, cardToNewBalance);
     }
+
+    @Test
+    void shouldNotTransferMoneyWithSumMoreThanBalance() {
+        var sum = generateInvalidAmount(firstCardBalance);
+        var expectedBalanceFirstCard = firstCardBalance;
+        var expectedBalanceSecondCard = secondCardBalance;
+        dashYourCards.chooseCardForTopUp(secondCardId);
+        var topUpPage = new DashboardPageTopUp();
+        topUpPage.moneyTransfer(secondCardId, sum, firstCardId);
+        var cardFromNewBalance = dashYourCards.getCardBalance(firstCardId);
+        var cardToNewBalance = dashYourCards.getCardBalance(secondCardId);
+        assertEquals(expectedBalanceFirstCard, cardFromNewBalance);
+        assertEquals(expectedBalanceSecondCard, cardToNewBalance);
+    }
 }
