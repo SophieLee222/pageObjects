@@ -15,15 +15,11 @@ public class DashboardPageTopUp {
     }
 
     // перевод с определённой карты на выбранную карту произвольной суммы.
-    public DashboardPageYourCards moneyTransfer(String idTo, int sum, String idFrom) {
+    public DashboardPageYourCards moneyTransfer(int sum, String cardFrom) {
         //заполняем сумму перевода
         $("[data-test-id=amount] input").setValue(String.valueOf(sum));
-        // Получаем номер карты, откуда перевод, используя DataHelper
-        String cardFromNumber = idFrom.equals(DataHelper.getCard1Info().getId())
-                ? DataHelper.getCard1Info().getNumber()
-                : DataHelper.getCard2Info().getNumber();
         //заполняем номер карты, откуда перевод
-        $("[data-test-id=from] input").setValue(cardFromNumber);
+        $("[data-test-id=from] input").setValue(cardFrom);
         //нажимаем кнопку пополнить
         actionTransfer.click();
         return new DashboardPageYourCards();

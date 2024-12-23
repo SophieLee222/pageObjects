@@ -21,6 +21,7 @@ public class MoneyTransferTest {
     String secondCardId;
     int firstCardBalance;
     int secondCardBalance;
+    String cardFrom;
 
     @BeforeEach
     void setup() {
@@ -28,6 +29,7 @@ public class MoneyTransferTest {
         var verifCode = DataHelper.getVerificationCode();
         firstCardId = getCard1Info().getId();
         secondCardId = getCard2Info().getId();
+        cardFrom = DataHelper.getCard1Info().getNumber();
         Selenide.open("http://localhost:9999");
         var loginPage = new LoginPage();
         var verifPage = loginPage.validLogin(info);
@@ -44,7 +46,7 @@ public class MoneyTransferTest {
         var expectedBalanceSecondCard = secondCardBalance + sum;
         dashYourCards.chooseCardForTopUp(secondCardId);
         var topUpPage = new DashboardPageTopUp();
-        topUpPage.moneyTransfer(secondCardId, sum, firstCardId);
+        topUpPage.moneyTransfer(sum, cardFrom);
         var cardFromNewBalance = dashYourCards.getCardBalance(firstCardId);
         var cardToNewBalance = dashYourCards.getCardBalance(secondCardId);
         assertEquals(expectedBalanceFirstCard, cardFromNewBalance);
@@ -58,7 +60,7 @@ public class MoneyTransferTest {
         var expectedBalanceSecondCard = secondCardBalance;
         dashYourCards.chooseCardForTopUp(secondCardId);
         var topUpPage = new DashboardPageTopUp();
-        topUpPage.moneyTransfer(secondCardId, sum, firstCardId);
+        topUpPage.moneyTransfer(sum, cardFrom);
         var cardFromNewBalance = dashYourCards.getCardBalance(firstCardId);
         var cardToNewBalance = dashYourCards.getCardBalance(secondCardId);
         assertEquals(expectedBalanceFirstCard, cardFromNewBalance);
